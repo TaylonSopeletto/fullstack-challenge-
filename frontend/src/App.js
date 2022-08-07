@@ -58,6 +58,7 @@ function App() {
 
   return (
     <div className="App">
+      <p>{process.env.NODE_ENV}</p>
       <S.ProductList>
         {products.map((product, key) => (
           <ProductCard
