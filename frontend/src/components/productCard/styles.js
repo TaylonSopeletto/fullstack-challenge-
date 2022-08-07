@@ -17,25 +17,25 @@ export const Container = styled.div`
     gap: 5px;
 
     .previousPrice {
-      color: #b5b5b6;
+      color: var(--grayscale-600);
       text-decoration-line: line-through;
       font-size: 14px;
       font-weight: 500;
     }
 
     .price {
-      color: #da4b4f;
+      color: var(--red-500);
       font-size: 20px;
       font-weight: 600;
     }
 
     .installments {
-      color: #848587;
+      color: var(--grayscale-700);
       letter-spacing: -0.005em;
       font-weight: 500;
       font-size: 12px;
       span {
-        color: #1c1c1c;
+        color: var(--grayscale-900);
       }
     }
   }

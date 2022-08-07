@@ -5,19 +5,25 @@ export default createGlobalStyle`
         margin: 0;
         padding: 0;
         box-sizing: border-box;
+        
     }
     html, body, #root {
-        background: #E5E5E5;
+        background: var(--grayscale-300);
         height: 100%;
+       
+
       }
       *, button, input {
         border: 0;
         outline: 0;
-        font-family: 'Roboto', sans-serif;
+        font-family: 'Inter', sans-serif;
       }
       :root{
           --grayscale-0: #FFFFFF;
           --grayscale-200: #E9EBEE;
+          --grayscale-300: #DADCDE;
+          --grayscale-600: #999A9B;
+          --grayscale-700: #737375;
           --grayscale-900: #1C1C1C;
           --pink-100: #FFCAE0;
           --red-500: #F3151B;
