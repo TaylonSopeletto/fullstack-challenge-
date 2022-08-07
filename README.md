@@ -1,4 +1,4 @@
-# Teste ecommere
+# Teste ecommerce
 
 ### frontend https://challenge-ecommerce-frontend.herokuapp.com/
 
