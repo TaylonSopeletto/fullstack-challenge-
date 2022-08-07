@@ -30,4 +30,4 @@ jobs:
           heroku_app_name: "challenge-ecommerce-frontend" #Must be unique in Heroku
           heroku_email: "taylon.gameta@outlook.com.br"
           appdir: "frontend"
-          buildpack: "mars/create-react-app"
+          buildpack: "https://github.com/mars/create-react-app-buildpack"
