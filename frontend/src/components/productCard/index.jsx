@@ -13,21 +13,22 @@ const ProductCard = ({
   onRemoveFromCart,
   onAddToCart,
   isAdded,
+  isFavorite,
 }) => {
   return (
     <S.Container>
       <S.AddToWish
-        isFavorite={product.isFavorite}
+        isFavorite={isFavorite}
         type="button"
         onClick={() =>
-          product.isFavorite
-            ? onRemoveFavoriteProduct(product.id)
-            : onFavoriteProduct(product.id)
+          isFavorite
+            ? onRemoveFavoriteProduct(product)
+            : onFavoriteProduct(product)
         }
       >
         <FontAwesomeIcon
           fontSize={30}
-          icon={product.isFavorite ? SolidIcon.faHeart : RegularIcon.faHeart}
+          icon={isFavorite ? SolidIcon.faHeart : RegularIcon.faHeart}
         />
       </S.AddToWish>
       <img alt={product.name} src="image.png" />

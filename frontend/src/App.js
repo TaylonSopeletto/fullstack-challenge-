@@ -1,76 +1,92 @@
-import { useState, useEffect } from "react";
+import { useEffect, useReducer } from "react";
 import ProductCard from "./components/productCard";
 import * as S from "./styles";
 import fetchProducts from "./fetch/products";
 
+const initialState = {
+  products: [],
+  cart: [],
+  favorites: [],
+};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "loadProducts":
+      return { ...state, products: action.products };
+
+    case "addItemToFavorite":
+      if (!state.favorites.find((item) => item.id === action.product.id)) {
+        return { ...state, favorites: state.favorites.push(action.product) };
+      } else {
+        return state;
+      }
+
+    case "removeItemFromFavorite":
+      const favProductIndex = state.favorites.findIndex(
+        (item) => item.id === action.product.id
+      );
+      return {
+        ...state,
+        favorites: state.favorites.splice(favProductIndex, 1),
+      };
+
+    case "addItemToCart":
+      if (!state.cart.find((item) => item.id === action.product.id)) {
+        return { ...state, cart: state.cart.push(action.product) };
+      } else {
+        return state;
+      }
+
+    case "removeItemFromCart":
+      const cartProductIndex = state.cart.findIndex(
+        (item) => item.id === action.product.id
+      );
+      return { ...state, cart: state.cart.splice(cartProductIndex, 1) };
+    default:
+      throw new Error();
+  }
+}
+
 function App() {
-  const [products, setProducts] = useState([]);
-  const [cart, setCart] = useState([]);
-  const [favorites, setFavorites] = useState([]);
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
-    fetchProducts.listProducts().then((res) => setProducts(res.data.results));
+    fetchProducts
+      .listProducts()
+      .then((res) =>
+        dispatch({ type: "loadProducts", products: res.data.results })
+      );
   }, []);
-
-  const onFavoriteProduct = (product) => {
-    const newFavorites = favorites.map((item) => item);
-    if (!newFavorites.find((item) => item.id === product.id)) {
-      newFavorites.push(product);
-    }
-    setFavorites(favorites);
-
-    const newProducts = products.map((item) => item);
-    const favoriteProduct = newProducts.findIndex(
-      (item) => item.id === product.id
-    );
-    newProducts[favoriteProduct].isFavorite = true;
-    setProducts(newProducts);
-  };
-
-  const onRemoveFavoriteProduct = (product) => {
-    const newFavorites = favorites.map((item) => item);
-    const index = newFavorites.findIndex((item) => item.id === product.id);
-    newFavorites.splice(index, 1);
-    setFavorites(newFavorites);
-
-    const newProducts = products.map((item) => item);
-    const favoriteProduct = newProducts.findIndex(
-      (item) => item.id === product.id
-    );
-    newProducts[favoriteProduct].isFavorite = false;
-    setProducts(newProducts);
-  };
-
-  const onAddToCart = (product) => {
-    const newCart = cart.map((item) => item);
-    if (!newCart.find((item) => item.id === product.id)) {
-      newCart.push(product);
-    }
-    setCart(newCart);
-  };
-
-  const onRemoveFromCart = (product) => {
-    const newCart = cart.map((item) => item);
-    const index = newCart.findIndex((item) => item.id === product.id);
-    newCart.splice(index, 1);
-    setCart(newCart);
-  };
 
   return (
     <div className="App">
       <p>{process.env.NODE_ENV}</p>
       <S.ProductList>
-        {products.map((product, key) => (
-          <ProductCard
-            isAdded={cart.find((item) => item.id === product.id)}
-            onAddToCart={() => onAddToCart(product)}
-            onRemoveFromCart={() => onRemoveFromCart(product)}
-            onFavoriteProduct={() => onFavoriteProduct(product)}
-            onRemoveFavoriteProduct={() => onRemoveFavoriteProduct(product)}
-            product={product}
-            key={key}
-          />
-        ))}
+        {state.products.length > 0 &&
+          state.products.map((product, key) => (
+            <ProductCard
+              isAdded={
+                state.cart.length > 0 &&
+                state.cart.find((item) => item.id === product.id)
+              }
+              isFavorite={
+                state.favorites.length > 0 &&
+                state.favorites.find((item) => item.id === product.id)
+              }
+              onAddToCart={() => dispatch({ type: "addItemToCart", product })}
+              onRemoveFromCart={() =>
+                dispatch({ type: "removeItemFromCart", product })
+              }
+              onFavoriteProduct={() =>
+                dispatch({ type: "addItemToFavorite", product })
+              }
+              onRemoveFavoriteProduct={() =>
+                dispatch({ type: "removeItemFromFavorite", product })
+              }
+              product={product}
+              key={key}
+            />
+          ))}
       </S.ProductList>
     </div>
   );
