@@ -1,5 +1,5 @@
-# DESAFIO ECOMMERCE
+# Teste ecommere
 
-### Front-End https://challenge-ecommerce-frontend.herokuapp.com/
+### frontend https://challenge-ecommerce-frontend.herokuapp.com/
 
-### Back-End https://challenge-ecommerce-frontend.herokuapp.com/
+### backend https://challenge-ecommerce-frontend.herokuapp.com/
