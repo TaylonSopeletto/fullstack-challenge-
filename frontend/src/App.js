@@ -60,7 +60,6 @@ function App() {
 
   return (
     <div className="App">
-      <p>{process.env.NODE_ENV}</p>
       <S.ProductList>
         {state.products.length > 0 &&
           state.products.map((product, key) => (
