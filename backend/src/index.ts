@@ -11,7 +11,7 @@ AppDataSource.initialize().then(async () => {
     app.use(json());
     app.use('/', router);
 
-    app.listen(4000, ()=> {
+    app.listen(process.env.PORT || 4000, ()=> {
         console.log("running");
     })
 
