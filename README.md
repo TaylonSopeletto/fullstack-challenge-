@@ -8,3 +8,5 @@
 
 - develop -> branch de desenvolvimento
 - main -> o que está aqui irá para produção
+
+Author: Taylon Sopeletto
